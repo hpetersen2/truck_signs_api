@@ -1,5 +1,5 @@
 # Builder-Stage: Installation der Abhängigkeiten
-FROM python:3.6-slim AS builder
+FROM python:3.8-slim AS builder
 
 RUN mkdir /app
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 
 # Laufzeit-Stage
-FROM python:3.6-slim
+FROM python:3.8-slim
 
 RUN apt-get update && apt-get install -y \
     postgresql-client \
@@ -29,7 +29,7 @@ RUN useradd -m -r appuser && \
     mkdir /app && \
     chown -R appuser /app
 
-COPY --from=builder /usr/local/lib/python3.6/site-packages/ /usr/local/lib/python3.6/site-packages/
+COPY --from=builder /usr/local/lib/python3.8/site-packages/ /usr/local/lib/python3.8/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 COPY entrypoint.sh /app/entrypoint.sh
