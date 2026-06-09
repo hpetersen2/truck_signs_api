@@ -1,11 +1,15 @@
+import os
 import environ
 from .base import *
 
-DEBUG = True
-
 env = environ.Env()
-# reading env file
-environ.Env.read_env()
+
+environ.Env.read_env(
+    os.path.join(
+        os.path.dirname(__file__),
+        "simple_env_config.env"
+    )
+)
 
 SECRET_KEY = env("DOCKER_SECRET_KEY")
 DEBUG = True
