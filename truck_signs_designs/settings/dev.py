@@ -1,14 +1,13 @@
 import environ
 from .base import *
 
-DEBUG = True
+DEBUG = env("DEBUG")
 
 env = environ.Env()
 # reading env file
 environ.Env.read_env()
 
 SECRET_KEY= env("SECRET_KEY")
-DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
     "https://www.signsfortrucks.com",
