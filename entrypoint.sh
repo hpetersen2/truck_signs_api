@@ -37,6 +37,7 @@ done
 echo "PostgreSQL is active"
 
 python manage.py migrate
+python manage.py makemigrations
 python manage.py collectstatic --noinput
 
 # Superuser anlegen (nur wenn nicht vorhanden)
