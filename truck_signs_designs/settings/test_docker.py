@@ -12,7 +12,7 @@ environ.Env.read_env(
 )
 
 SECRET_KEY = env("DOCKER_SECRET_KEY")
-DEBUG = True
+DEBUG = env("DEBUG")
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
