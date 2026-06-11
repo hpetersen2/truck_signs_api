@@ -69,7 +69,9 @@ The application requires a Docker network, a volume for database persistence, a 
 # 1. Create network and volume (only needed once)
 docker network create trucksigns-net
 docker volume create trucksigns-pgdata
+```
 
+```bash
 # 2. Start PostgreSQL
 docker run -d \
   --name db \
@@ -78,7 +80,9 @@ docker run -d \
   --env-file .env \
   -v trucksigns-pgdata:/var/lib/postgresql/data \
   postgres:14
+```
 
+```bash
 # 3. Start the Django app
 docker run -d \
   --name truck-signs-api \
