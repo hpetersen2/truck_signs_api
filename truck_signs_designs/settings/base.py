@@ -13,14 +13,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import environ
 
-env = environ.Env()
-
-environ.Env.read_env(
-    os.path.join(
-        os.path.dirname(__file__),
-        "simple_env_config.env"
-    )
+env = environ.Env(
+    DEBUG=(bool, False),
+    DJANGO_ALLOWED_HOSTS=(list, ["localhost", "127.0.0.1"]),
 )
+
+env_file = os.path.normpath(
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", ".env")
+)
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

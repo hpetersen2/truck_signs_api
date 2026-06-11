@@ -1,4 +1,4 @@
-# Builder-Stage: Installation der Abhängigkeiten
+# Builder stage: Installing dependencies
 FROM python:3.8-slim AS builder
 
 RUN mkdir /app
@@ -17,7 +17,7 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-# Laufzeit-Stage
+# Runtime stage
 FROM python:3.8-slim
 
 RUN apt-get update && apt-get install -y \

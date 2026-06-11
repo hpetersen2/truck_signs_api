@@ -1,18 +1,7 @@
-import os
-import environ
 from .base import *
 
-env = environ.Env()
-
-environ.Env.read_env(
-    os.path.join(
-        os.path.dirname(__file__),
-        "simple_env_config.env"
-    )
-)
-
 SECRET_KEY = env("DOCKER_SECRET_KEY")
-DEBUG = env("DEBUG")
+DEBUG = env.bool("DEBUG", default=False)
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",

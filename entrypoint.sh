@@ -1,31 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# .env für Django erzeugen aus den Container-Umgebungsvariablen
-ENV_FILE="/app/truck_signs_designs/settings/simple_env_config.env"
-
-cat > "${ENV_FILE}" <<EOF
-SECRET_KEY=${SECRET_KEY}
-DOCKER_SECRET_KEY=${SECRET_KEY}
-
-DOCKER_DB_NAME=${DATABASE_NAME}
-DOCKER_DB_USER=${DATABASE_USERNAME}
-DOCKER_DB_PASSWORD=${DATABASE_PASSWORD}
-DOCKER_DB_HOST=${DATABASE_HOST}
-DOCKER_DB_PORT=${DATABASE_PORT}
-
-DATABASE_ENGINE=${DATABASE_ENGINE}
-DATABASE_NAME=${DATABASE_NAME}
-DATABASE_USERNAME=${DATABASE_USERNAME}
-DATABASE_PASSWORD=${DATABASE_PASSWORD}
-DATABASE_HOST=${DATABASE_HOST}
-DATABASE_PORT=${DATABASE_PORT}
-
-DEBUG=${DEBUG:-False}
-DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
-DJANGO_LOGLEVEL=${DJANGO_LOGLEVEL:-info}
-EOF
-
 # Warten auf PostgreSQL
 HOST="${DATABASE_HOST:-db}"
 PORT="${DATABASE_PORT:-5432}"
@@ -37,7 +12,6 @@ done
 echo "PostgreSQL is active"
 
 python manage.py migrate
-python manage.py makemigrations
 python manage.py collectstatic --noinput
 
 # Superuser anlegen (nur wenn nicht vorhanden)
