@@ -60,11 +60,6 @@ The `settings` folder inside `truck_signs_designs` contains configuration for ea
 docker build -t truck-signs-api .
 ```
 
-**Windows PowerShell**
-```powershell
-docker build -t truck-signs-api .
-```
-
 ### Run the Application
 
 The application requires a Docker network, a volume for database persistence, a running PostgreSQL container, and then the app container itself.
@@ -94,31 +89,6 @@ docker run -d \
   truck-signs-api
 ```
 
-**Windows PowerShell**
-```powershell
-# 1. Create network and volume (only needed once)
-docker network create trucksigns-net
-docker volume create trucksigns-pgdata
-
-# 2. Start PostgreSQL
-docker run -d `
-  --name db `
-  --network trucksigns-net `
-  --restart unless-stopped `
-  --env-file .env `
-  -v trucksigns-pgdata:/var/lib/postgresql/data `
-  postgres:14
-
-# 3. Start the Django app
-docker run -d `
-  --name truck-signs-api `
-  --network trucksigns-net `
-  --restart unless-stopped `
-  -p 8020:8020 `
-  --env-file .env `
-  truck-signs-api
-```
-
 The API is available at `http://localhost:8020`.  
 The Django admin panel is available at `http://localhost:8020/admin`.
 
@@ -126,12 +96,6 @@ The Django admin panel is available at `http://localhost:8020/admin`.
 
 **Mac / Linux**
 ```bash
-docker stop truck-signs-api db
-docker rm truck-signs-api db
-```
-
-**Windows PowerShell**
-```powershell
 docker stop truck-signs-api db
 docker rm truck-signs-api db
 ```
@@ -151,11 +115,6 @@ Create a `.env` file in the project root by copying the provided template, then 
 cp .env.template .env
 ```
 
-**Windows PowerShell**
-```powershell
-Copy-Item .env.template .env
-```
-
 > `DATABASE_HOST` and `DOCKER_DB_HOST` must be set to `db` — this is the container name of the PostgreSQL container and how the two containers find each other within the Docker network.
 
 ### Docker Commands in Detail
@@ -167,20 +126,12 @@ Copy-Item .env.template .env
 docker logs truck-signs-api
 docker logs -f truck-signs-api   # follow live
 
-# Windows PowerShell
-docker logs truck-signs-api
-docker logs -f truck-signs-api
-```
-
 **Open a shell inside the running container**
 
 ```bash
 # Mac / Linux
 docker exec -it truck-signs-api bash
 
-# Windows PowerShell
-docker exec -it truck-signs-api bash
-```
 
 **Remove everything including the volume (⚠️ deletes all database data)**
 
@@ -190,13 +141,6 @@ docker stop truck-signs-api db
 docker rm truck-signs-api db
 docker volume rm trucksigns-pgdata
 docker network rm trucksigns-net
-
-# Windows PowerShell
-docker stop truck-signs-api db
-docker rm truck-signs-api db
-docker volume rm trucksigns-pgdata
-docker network rm trucksigns-net
-```
 
 ### Persistence
 
