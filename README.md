@@ -125,12 +125,14 @@ cp .env.template .env
 # Mac / Linux
 docker logs truck-signs-api
 docker logs -f truck-signs-api   # follow live
+```
 
 **Open a shell inside the running container**
 
 ```bash
 # Mac / Linux
 docker exec -it truck-signs-api bash
+```
 
 
 **Remove everything including the volume (⚠️ deletes all database data)**
@@ -141,6 +143,7 @@ docker stop truck-signs-api db
 docker rm truck-signs-api db
 docker volume rm trucksigns-pgdata
 docker network rm trucksigns-net
+```
 
 ### Persistence
 
